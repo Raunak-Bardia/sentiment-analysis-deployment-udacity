@@ -85,8 +85,9 @@ def predict_fn(input_data, model):
 
     # TODO: Compute the result of applying the model to the input data. The variable `result` should
     #       be a numpy array which contains a single integer which is either 1 or 0
-    result = model(data)
-    result = result.detach()
-    result = torch.round(result).numpy()
+    with torch.no_grad():
+        out = model(data)
+        
+    result = np.round(out.numpy())
 
-    return result    
+    return float(result)   
